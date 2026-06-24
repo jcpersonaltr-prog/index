@@ -7,10 +7,11 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Bangers&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;}
-body{background:#000;display:flex;justify-content:center;align-items:center;
+body{background:#000;display:flex;justify-content:center;align-items:flex-start;
      min-height:100vh;overflow:hidden;touch-action:none;}
 #game{position:relative;width:600px;height:700px;overflow:hidden;
-       border:3px solid #ff69b4;box-shadow:0 0 30px #ff69b4;}
+       border:3px solid #ff69b4;box-shadow:0 0 30px #ff69b4;
+       transform-origin:top center;}
 #starCanvas{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;}
 
 /* HUD */
@@ -341,8 +342,11 @@ const fbtn=document.getElementById('fbtn');
 let jDX=0,jOn=false,fireHeld=false;
 jzone.addEventListener('touchstart',e=>{e.preventDefault();jOn=true;jDX=0;},{passive:false});
 jzone.addEventListener('touchmove',e=>{e.preventDefault();if(!jOn)return;
-  const r=jzone.getBoundingClientRect(),cx=r.left+r.width/2;
-  jDX=Math.max(-36,Math.min(36,e.touches[0].clientX-cx));
+  const r=jzone.getBoundingClientRect();
+  const cx=r.left+r.width/2;
+  const scale=document.getElementById('game')._scale||1;
+  const raw=e.touches[0].clientX-cx;
+  jDX=Math.max(-36,Math.min(36,raw));
   jknob.style.transform=`translate(calc(-50% + ${jDX}px),-50%)`;
 },{passive:false});
 jzone.addEventListener('touchend',e=>{e.preventDefault();jOn=false;jDX=0;jknob.style.transform='translate(-50%,-50%)'; });
@@ -506,6 +510,21 @@ function loop(){
   updateParticles();
   drawStars(gt);
 }
+
+// ── Responsive scaling ────────────────────────────────────────────────────────
+function scaleGame() {
+  const g = document.getElementById('game');
+  const scaleX = window.innerWidth / 600;
+  const scaleY = window.innerHeight / 700;
+  const scale = Math.min(scaleX, scaleY, 1); // never upscale on desktop
+  const topOffset = Math.max(0, (window.innerHeight - 700 * scale) / 2);
+  g.style.transform = `scale(${scale})`;
+  g.style.marginTop = topOffset + 'px';
+  // Fix touch coordinates for scaled canvas
+  g._scale = scale;
+}
+scaleGame();
+window.addEventListener('resize', scaleGame);
 </script>
 </body>
 </html>
