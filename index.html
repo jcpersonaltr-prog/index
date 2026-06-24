@@ -39,17 +39,18 @@ body{background:#000;display:flex;justify-content:center;align-items:center;
 
 /* INTRO */
 #intro{position:absolute;inset:0;background:radial-gradient(ellipse,#1a0020,#000);
-        display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:200;}
-.ititle{font-family:'Bangers',cursive;font-size:68px;color:#fff;text-align:center;line-height:1;
+        display:flex;flex-direction:column;align-items:center;justify-content:center;
+        z-index:200;overflow-y:auto;padding:10px 0 20px;}
+.ititle{font-family:'Bangers',cursive;font-size:clamp(42px,12vw,68px);color:#fff;text-align:center;line-height:1;
          text-shadow:4px 4px 0 #ff1493,0 0 40px #ff69b4;letter-spacing:6px;
          animation:pulse 1.5s ease-in-out infinite;}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
-.isub{font-family:'Bangers',cursive;font-size:26px;color:#ffdd00;letter-spacing:3px;margin:4px 0 12px;}
-#introImg{width:110px;animation:bob 1.2s ease-in-out infinite;}
-@keyframes bob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-10px) rotate(3deg)}}
-.itag{font-size:8px;color:#ff69b4;text-align:center;margin:6px;line-height:1.9;font-family:'Press Start 2P',monospace;}
-.ibtn{margin-top:10px;font-family:'Press Start 2P',monospace;font-size:12px;color:#000;
-       background:linear-gradient(135deg,#ff69b4,#ff1493);border:none;padding:12px 28px;
+.isub{font-family:'Bangers',cursive;font-size:clamp(18px,5vw,26px);color:#ffdd00;letter-spacing:3px;margin:2px 0 6px;}
+#introImg{width:clamp(70px,22vw,110px);animation:bob 1.2s ease-in-out infinite;}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-8px) rotate(3deg)}}
+.itag{font-size:clamp(6px,1.8vw,8px);color:#ff69b4;text-align:center;margin:4px;line-height:1.7;font-family:'Press Start 2P',monospace;}
+.ibtn{margin-top:8px;font-family:'Press Start 2P',monospace;font-size:clamp(9px,2.5vw,12px);color:#000;
+       background:linear-gradient(135deg,#ff69b4,#ff1493);border:none;padding:10px 24px;
        cursor:pointer;box-shadow:4px 4px 0 #880044;animation:blink 1s step-end infinite;}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
 .ibadge{position:absolute;top:10px;right:10px;background:#ff1493;color:#fff;
@@ -102,7 +103,7 @@ body{background:#000;display:flex;justify-content:center;align-items:center;
 
   <div id="levelFlash"><span id="lfText"></span></div>
 
-  <div id="intro">
+  <div id="intro" onclick="if(event.target.tagName!=='BUTTON')startGame()" style="cursor:pointer">
     <div class="ibadge">⚠ ADULTS<br>ONLY<br>18+</div>
     <div class="ititle">SPERM<br>INVADERS</div>
     <div class="isub">★ ARCADE EDITION ★</div>
